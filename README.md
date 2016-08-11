@@ -61,3 +61,22 @@ The AssetExtractor class provides some utilities that you can use to handle appl
 such as setting and retrieving the version of the assets, and to confirm if the assets were already
 extracted to the device. In a production application you want to extract the files from the APK
 only when it runs the first time or on application updates.
+
+
+## Limitations
+
+PyBridge uses the Python 3.5 distribution bundled with [Crystax NDK](https://www.crystax.net/).
+The Crystax NDK allows you, in theory, to use or compile any C python module out there.
+Bundle the compiled modules in the python assets folder together with the standard library and you're
+done.
+
+The performance of the Python interpreter on modern smartphones is enough for most use cases, but
+you should always consider wrapping PyBridge calls in a separate thread so that you do not block
+the main UI thread.
+
+If you have a pure python module with a lot of python files, consider adding them to a zip file
+and adding the zip file to sys.path in bootstrap.py. It will save time when you extract the module
+from the APK assets and it will prevent the creation of pycache files which will only increase the
+size of the data consumed by your app. For best performance, consider using only bytecode compiled
+files inside the zip file (check [this script](https://github.com/flatangle/flatlib/blob/master/scripts/build.py)
+for ideas how to automatically build bytecode compiled zip files).
