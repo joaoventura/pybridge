@@ -6,7 +6,7 @@ without needing network frameworks. PyBridge is being used in production on [one
 apps](https://play.google.com/store/apps/details?id=com.flatangle.charts) and it shares a large
 amount of code with [one of my web applications](http://elements.flatangle.com/).
 
-PyBridge uses the Python 3.5 distribution bundled in [Crystax NDK](https://www.crystax.net/).
+PyBridge uses the Python 3.5 distribution bundled with [Crystax NDK](https://www.crystax.net/).
 
 
 ## Overview
@@ -15,7 +15,7 @@ This repository shows the source code of an empty Android application with a Tex
 When the main activity is started, it simply extracts all the necessary Python files to the device,
 initializes the Python interpreter and returns a message to the TextView.
 
-[[https://github.com/joaoventura/pybridge/blob/master/pybridge.png]]
+![App image](https://github.com/joaoventura/pybridge/blob/master/pybridge.png)
 
 
 ## Running the project
