@@ -111,6 +111,11 @@ JNIEXPORT jint JNICALL Java_com_jventura_pybridge_PyBridge_start
 
     // Bootstrap
     PyRun_SimpleString("import bootstrap");
+
+    // Cleanup
+    (*env)->ReleaseStringUTFChars(env, path, pypath);
+    PyMem_RawFree(wchar_paths);
+
     return 0;
 }
 
@@ -153,8 +158,7 @@ JNIEXPORT jstring JNICALL Java_com_jventura_pybridge_PyBridge_call
 
     // We must copy the characters as we will lose the reference
     // to char *myResultChar when we DECREF PyObject* myResult
-    char *res = malloc(sizeof(char) * strlen(myResultChar) + 1);
-    strcpy(res, myResultChar);
+    jstring result = (*env)->NewStringUTF(env, myResultChar);
 
     // Cleanup
     (*env)->ReleaseStringUTFChars(env, payload, payload_utf);
@@ -163,8 +167,7 @@ JNIEXPORT jstring JNICALL Java_com_jventura_pybridge_PyBridge_call
     Py_DECREF(myFunction);
     Py_DECREF(args);
     Py_DECREF(myResult);
+    // myResultChar is stored inside myResult, so doesn't need freeing
 
-    // We do not need to free res as the JVM will eventually GC the jstring
-    jstring result = (*env)->NewStringUTF(env, res);
     return result;
 }
