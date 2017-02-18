@@ -156,8 +156,7 @@ JNIEXPORT jstring JNICALL Java_com_jventura_pybridge_PyBridge_call
     PyObject* myResult = PyObject_CallObject(myFunction, args);
     char *myResultChar = PyUnicode_AsUTF8(myResult);
 
-    // We must copy the characters as we will lose the reference
-    // to char *myResultChar when we DECREF PyObject* myResult
+    // Store the result on a java.lang.String object
     jstring result = (*env)->NewStringUTF(env, myResultChar);
 
     // Cleanup
@@ -167,7 +166,6 @@ JNIEXPORT jstring JNICALL Java_com_jventura_pybridge_PyBridge_call
     Py_DECREF(myFunction);
     Py_DECREF(args);
     Py_DECREF(myResult);
-    // myResultChar is stored inside myResult, so doesn't need freeing
 
     return result;
 }
