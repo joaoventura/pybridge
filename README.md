@@ -27,9 +27,9 @@ Clone this project and open it on the latest Android Studio.
 
 To build the pybridge shared library you will need to download the Crystax NDK from
 https://www.crystax.net/en/download. Open the `app/src/main/jni/Android.mk` file and change the
-`CRYSTAX_PATH` to match the path of your Crystax NDK installation. Finally, open the terminal and
-run `path/to/crystax/ndk-build`. You should have libcrystax, libpython3.5 and libpybridge in
-src/main/libs.
+`CRYSTAX_PATH` to match the path of your Crystax NDK installation. Finally, open the terminal,
+cd to `app/src/main/jni`, and run `path/to/crystax/ndk-build`. You should have libcrystax, 
+libpython3.5 and libpybridge in src/main/libs.
 
 Run the project in the Android Studio and you should see a `Hello Python 3.5` message in the screen.
 
