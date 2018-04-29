@@ -83,3 +83,8 @@ from the APK assets and it will prevent the creation of pycache files which will
 size of the data consumed by your app. For best performance, consider using only bytecode compiled
 files inside the zip file (check [this script](https://github.com/flatangle/flatlib/blob/master/scripts/build.py)
 for ideas how to automatically build bytecode compiled zip files).
+
+
+## License
+
+You can use this project if you want, a simple acknowledgment is enough but not required.
