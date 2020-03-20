@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+
+# compiled jni files
+*/src/main/libs/
