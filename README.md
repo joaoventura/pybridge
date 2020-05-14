@@ -4,10 +4,8 @@ PyBridge is a JNI implementation that allows you to reuse your existing Python c
 Android Java application. It allows you to send String or JSON messages to your Python interpreter
 without the need for network frameworks. Instead of using web applications disguised as native
 applications, you can reuse your Python backend code and implement truly native Android applications.
-PyBridge uses the Python 3.5 distribution bundled with [Crystax NDK](https://www.crystax.net/).
 
-PyBridge is being used in production on [one of my Android apps](https://play.google.com/store/apps/details?id=com.flatangle.charts)
-and it shares a large amount of code with [one of my web applications](http://elements.flatangle.com/).
+PyBridge is being used in production on [one of my Android apps](https://play.google.com/store/apps/details?id=com.flatangle.charts) and it shares a large amount of code with [one of my web applications](http://elements.flatangle.com/).
 
 *Shameless plug:* I do contract work, check out my website at http://joaoventura.net/ or buy my apps!
 
@@ -25,13 +23,25 @@ initializes the Python interpreter and sets a message on the TextView.
 
 Clone this project and open it on the latest Android Studio.
 
-To build the pybridge shared library you will need to download the Crystax NDK from
-https://www.crystax.net/en/download. Open the `app/src/main/jni/Android.mk` file and change the
-`CRYSTAX_PATH` to match the path of your Crystax NDK installation. Finally, open the terminal,
-cd to `app/src/main/jni`, and run `path/to/crystax/ndk-build`. You should have libcrystax, 
-libpython3.5 and libpybridge in src/main/libs.
+To build the pybridge shared library you will need first to compile a guest libpython3.8m.so for the architecure and then use the compiled sources to build the pybridge shared library.
 
-Run the project in the Android Studio and you should see a `Hello Python 3.5` message in the screen.
+### Compile Python 3.8 for Android
+
+PyBridge uses the [python-for-android](https://python-for-android.readthedocs.io/en/latest/) project to compile the necessary shared libraries (libpython3.8m.so) and standard lib modules. 
+
+I use `p4a create --requirements=python3 --blacklist-requirements=sqlite3,android,libffi,openssl` to start the build process. 
+
+The generated files are usually inside `~/.local/share/python-for-android/` on Linux. The shared library is in `build/other_builds/python3/.../android-build/` and the compiled stdlib is in `dists/.../_python_bundle`. These files are necessary to compile libpybridge.so and run the project.
+
+### Compile libpybridge.so
+
+Open the `app/src/main/jni/Android.mk` file and change the `PYTHON_FOR_ANDROID_PATH` (and maybe the others) to match the path of the python-for-android generated files. Finally, open the terminal, cd to `app/src/main/jni`, and run `path/to/ndk/ndk-build`. You should have libpython3.8 and libpybridge in src/main/libs.
+
+### Copy the standard library 
+
+You must copy the stdlib files in `_python_bundle` to `assets/python` along with bootstrap.py. Those files may already be there, but update them if you use another python version.
+
+Finally, run the project in the Android Studio and you should see a `Hello Python 3.8` message in the screen.
 
 
 ## How it works
@@ -68,10 +78,7 @@ only when it runs on the first time or after the application updates.
 
 ## Limitations
 
-PyBridge uses the Python 3.5 distribution bundled with [Crystax NDK](https://www.crystax.net/).
-The Crystax NDK allows you, in theory, to use or compile any C python module out there.
-Bundle the compiled modules in the python assets folder together with the standard library, import
-them and you're done.
+PyBridge uses python-for-android to cross-compile Python 3.8 to Android. In theory you can use other python-for-android recipes to cross-compile other python libraries such as Numpy. Depending on the library, bundle the compiled modules in the python assets folder together with the standard library, import them and you're probably done.
 
 The performance of the Python interpreter on modern smartphones is more than enough for most use cases,
 but you should always consider wrapping PyBridge calls in a separate thread so that you do not block
