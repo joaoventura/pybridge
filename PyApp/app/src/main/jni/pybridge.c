@@ -98,7 +98,7 @@ JNIEXPORT jint JNICALL Java_com_jventura_pybridge_PyBridge_start
 
     // Build paths for the Python interpreter
     char paths[512];
-    snprintf(paths, sizeof(paths), "%s:%s/stdlib.zip", pypath, pypath);
+    snprintf(paths, sizeof(paths), "%s:%s/stdlib.zip:%s/modules", pypath, pypath, pypath);
 
     // Set Python paths
     wchar_t *wchar_paths = Py_DecodeLocale(paths, NULL);
@@ -106,7 +106,7 @@ JNIEXPORT jint JNICALL Java_com_jventura_pybridge_PyBridge_start
 
     // Initialize Python interpreter and logging
     PyImport_AppendInittab("androidlog", PyInit_androidlog);
-    Py_Initialize();
+    Py_InitializeEx(0);
     setAndroidLog();
 
     // Bootstrap
@@ -154,7 +154,7 @@ JNIEXPORT jstring JNICALL Java_com_jventura_pybridge_PyBridge_call
 
     // Call function and get the resulting string
     PyObject* myResult = PyObject_CallObject(myFunction, args);
-    char *myResultChar = PyUnicode_AsUTF8(myResult);
+    const char *myResultChar = PyUnicode_AsUTF8(myResult);
 
     // Store the result on a java.lang.String object
     jstring result = (*env)->NewStringUTF(env, myResultChar);
