@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
         try {
             JSONObject json = new JSONObject();
             json.put("function", "greet");
-            json.put("name", "Python 3.5");
+            json.put("name", "Python 3.8");
 
             JSONObject result = PyBridge.call(json);
             String answer = result.getString("result");
 
-            TextView textView = (TextView) findViewById(R.id.textView);
+            TextView textView = findViewById(R.id.textView);
             textView.setText(answer);
 
         } catch (JSONException e) {
