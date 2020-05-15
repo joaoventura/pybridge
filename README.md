@@ -20,7 +20,7 @@ Clone this project and open it on the latest Android Studio.
 
 To build the pybridge shared library you need a working Android NDK and SDK. Open the terminal, cd into `app/src/main/jni`, and run `path/to/ndk/ndk-build`. You should have libpython3.8m.so and libpybridge.so in `src/main/libs`.
 
-You must also copy the standard library files in `python-for-android/dists/.../_python_bundle` to `assets/python` along with the `bootstrap.py` file.
+You must also copy the standard library files in `python-for-android/dists/.../_python_bundle` to `assets/python` along with the `bootstrap.py` file. **If you don't do this, the Python interpreter will not start and the application will stop!**.
 
 Finally, run the project in the Android Studio and you should see a `Hello Python 3.8` message in the screen.
 
