@@ -24,8 +24,3 @@ LOCAL_MODULE    := python3.8m
 LOCAL_SRC_FILES := $(PYTHON_PATH)/android-build/libpython3.8m.so
 LOCAL_EXPORT_CFLAGS := -I $(PYTHON_PATH)/Include
 include $(PREBUILT_SHARED_LIBRARY)
-
-
-# The assets path
-# ASSETS_PATH := $(PYTHON_FOR_ANDROID_PATH)/dists/unnamed_dist_1__armeabi-v7a/_python_bundle/_python_bundle
-# NOTE: Copy assets from the p4a dist path to ../assets/python along with bootstrap.py
