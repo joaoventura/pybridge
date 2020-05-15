@@ -15,3 +15,8 @@
 
 # compiled jni files
 */src/main/libs/
+
+# assets stdlib files
+*/src/main/assets/python/stdlib.zip
+*/src/main/assets/python/modules/*
+*/src/main/assets/python/site-packages/*
