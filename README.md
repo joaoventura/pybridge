@@ -100,6 +100,14 @@ In the "app/build.gradle" file add additional ABI.
 
 Gradle ignores now APP_ABI in "jni/Application.mk" ```https://developer.android.com/ndk/guides/application_mk#app_abi```
 
+**Copy the standard library files** (destination)
+
+    |── assets
+        |── python
+            |── bootstrap.py
+            |── modules  (from python-for-android/dists/.../_python_bundle)
+            |── stdlib.zip  (from python-for-android/dists/.../_python_bundle)
+
 Click [here](#add-info) to go back to "Running the project"
 
 
