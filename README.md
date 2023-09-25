@@ -20,7 +20,8 @@ Clone this project and open it on the latest Android Studio.
 
 To build the pybridge shared library you need a working Android NDK and SDK. Open the terminal, cd into `app/src/main/jni`, and run `path/to/ndk/ndk-build`. You should have libpython3.8m.so and libpybridge.so in `src/main/libs`.
 
-You must also copy the standard library files in `python-for-android/dists/.../_python_bundle` to `assets/python` along with the `bootstrap.py` file. **If you don't do this, the Python interpreter will not start and the application will stop!**.
+You must also copy the standard library files in `python-for-android/dists/.../_python_bundle` to `assets/python` along with the `bootstrap.py` file. **If you don't do this, the Python interpreter will not start and the application will stop!**.  <a id="add-info"></a>
+Click [here](#add-info-heading) for additional information.
 
 Finally, run the project in the Android Studio and you should see a `Hello Python 3.8` message in the screen.
 
@@ -82,6 +83,24 @@ from the APK assets and it will prevent the creation of pycache files which will
 size of the data consumed by your app. For best performance, consider using only bytecode compiled
 files inside the zip file (check [this script](https://github.com/flatangle/flatlib/blob/master/scripts/build.py)
 for ideas how to automatically build bytecode compiled zip files).
+
+<a id="add-info-heading"></a>
+### Additional Information
+
+**ABI**
+
+In the "app/build.gradle" file add additional ABI.
+
+    android { 
+        defaultConfig { 
+            ndk { abiFilters 'armeabi-v7a' 
+            }
+        } 
+    }
+
+Gradle ignores now APP_ABI in "jni/Application.mk" ```https://developer.android.com/ndk/guides/application_mk#app_abi```
+
+Click [here](#add-info) to go back to "Running the project"
 
 
 ## License
